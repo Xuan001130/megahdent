@@ -121,7 +121,7 @@ img,svg{display:block}
 .pt-front::before{content:"";position:absolute;inset:0;background:radial-gradient(260px circle at var(--mx,50%) var(--my,30%),rgba(255,181,71,.22),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
 .ptile:hover .pt-front::before{opacity:1}
 .ptile:hover .pt-face{border-color:rgba(255,181,71,.45)}
-.pt-front .img{position:absolute;inset:0 0 28%;display:grid;place-items:center;padding:13%;transform:translateZ(30px)}
+.pt-front .img{position:absolute;inset:4% 0 22%;display:grid;place-items:center;padding:9% 10%;transform:translateZ(30px)}
 .pt-front .img img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 18px 24px rgba(0,0,0,.45));transition:transform .5s cubic-bezier(.2,.8,.2,1)}
 .ptile:hover .pt-front .img img{transform:scale(1.07) translateY(-4px)}
 .ph-img{width:74%;aspect-ratio:1;border-radius:20px;border:1.5px dashed rgba(255,255,255,.22);display:grid;place-items:center;text-align:center;color:rgba(255,255,255,.42);font:600 12px var(--sans);background:radial-gradient(circle at 35% 30%,rgba(255,181,71,.16),transparent 60%)}
@@ -149,6 +149,8 @@ img,svg{display:block}
 .pm-img{position:relative;min-height:380px;display:grid;place-items:center;padding:8%;overflow:hidden;background:radial-gradient(circle at 50% 45%,rgba(255,181,71,.16),transparent 62%);cursor:zoom-in}
 .pm-img img{max-width:100%;max-height:420px;object-fit:contain;transition:transform .2s ease-out;filter:drop-shadow(0 30px 40px rgba(0,0,0,.5))}
 .pm-img .ph-img{width:70%}
+.pm-img{height:min(62vh,460px)}
+.pm-img img.fit{max-height:none}
 .pm-body{padding:40px 36px;display:flex;flex-direction:column;gap:14px}
 .pm-body .b{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);font-weight:700}
 .pm-body h3{font-size:clamp(26px,3vw,38px);font-weight:800;letter-spacing:-.04em;line-height:1.05}
@@ -158,7 +160,7 @@ img,svg{display:block}
 .pm-x{position:absolute;top:14px;right:14px;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(7,11,20,.5);color:var(--ink);font-size:20px;cursor:pointer;z-index:2}
 .pm-arrows{display:flex;gap:8px;margin-left:auto}
 .pm-arrows button{width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:transparent;color:var(--ink);cursor:pointer;font-size:16px}
-@media (max-width:760px){.pm-card{grid-template-columns:1fr}.pm-img{min-height:260px}.pm-body{padding:24px 22px 26px}}
+@media (max-width:760px){.pm-card{grid-template-columns:1fr}.pm-img{min-height:260px;height:300px}.pm-body{padding:24px 22px 26px}}
 
 /* ===== STATS ===== */
 .stats{padding:18vh 0 14vh}
@@ -698,21 +700,72 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:34px 0 46px;color:var(
   // ===== PRODUCT SHOWCASE: tilt + flip grid =====
   // Add your photos: set img to a path such as 'asset/products/reciproc-blue.png' (transparent PNG looks best).
   const PRODUCTS = [
-    { name: 'Reciproc blue', brand: 'VDW', cat: 'Endodontics', img: '', desc: 'Reciprocating NiTi files known for flexibility and cyclic fatigue resistance.' },
-    { name: 'Tetric N2', brand: 'Ivoclar', cat: 'Restorative', img: '', desc: 'Composite system for everyday anterior and posterior restorations.' },
-    { name: 'Prime&Bond universal', brand: 'Dentsply Sirona', cat: 'Restorative', img: '', desc: 'Universal adhesive for direct and indirect bonding procedures.' },
-    { name: 'Neo Spectra ST', brand: 'Dentsply Sirona', cat: 'Restorative', img: '', desc: 'Universal nano-ceramic composite with natural shade matching.' },
-    { name: 'PrograMill DRY', brand: 'Ivoclar', cat: 'Lab & digital', img: '', desc: 'Compact dry milling machine with integrated CAM software for in-clinic labs.' },
-    { name: 'Programat CS6', brand: 'Ivoclar', cat: 'Lab & digital', img: '', desc: 'Combination furnace for sintering, glazing and crystallisation.' },
-    { name: 'Helios 500', brand: 'Eighteeth', cat: 'Lab & digital', img: '', desc: 'Lightweight intraoral scanner for fast full-arch digital impressions.' },
-    { name: 'Brilliance 48° Pro', brand: 'Eighteeth', cat: 'Equipment', img: '', desc: 'Angled-view dental loupes designed to help you work sitting up straight.' },
-    { name: 'GUM Paroex', brand: 'Sunstar GUM', cat: 'Oral care', img: '', desc: 'Chlorhexidine mouthwash range for short-term gum care.' },
-    { name: 'K-Files', brand: 'MANI', cat: 'Endodontics', img: '', desc: 'Stainless steel hand files for canal negotiation and shaping.' },
+    { name: 'Reciproc blue', brand: 'VDW', cat: 'Endodontics', img: 'asset/356520_1.png', desc: 'Reciprocating NiTi files known for flexibility and cyclic fatigue resistance.' },
+    { name: 'Variolink Esthetic DC Refill', brand: 'Ivoclar', cat: 'Restorative', img: 'asset/DC-1538x1843.png', desc: 'An aesthetic, dual-curing (DC) and light-curing (LC) luting composite designed for the permanent cementation of demanding ceramic and composite restorations.' },
+    { name: 'Tetric N2', brand: 'Ivoclar', cat: 'Restorative', img: 'asset/tetricnflow.png', desc: 'Composite system for everyday anterior and posterior restorations.' },
+    { name: 'Prime&Bond universal', brand: 'Dentsply Sirona', cat: 'Restorative', img: 'asset/primeandbond.png', desc: 'Universal adhesive for direct and indirect bonding procedures.' },
+    { name: 'Neo Spectra ST', brand: 'Dentsply Sirona', cat: 'Restorative', img: 'asset/res-image-tb-spectra-st-hv-compulessyringes-a2-570x342.png', desc: 'Universal nano-ceramic composite with natural shade matching.' },
+    { name: 'Programat CS6', brand: 'Ivoclar', cat: 'Lab & digital', img: 'asset/Programat-CS6-1.png', desc: 'Combination furnace for sintering, glazing and crystallisation.' },
+    { name: 'Helios 500', brand: 'Eighteeth', cat: 'Lab & digital', img: 'asset/ec0044.png', desc: 'Lightweight intraoral scanner for fast full-arch digital impressions.' },
+    { name: 'Brilliance 48° Pro', brand: 'Eighteeth', cat: 'Equipment', img: 'asset/Brilliance 48 pro pic.png', desc: 'Angled-view dental loupes designed to help you work sitting up straight.' },
+    { name: 'GUM Paroex', brand: 'Sunstar GUM', cat: 'Oral care', img: 'asset/1784 EMEA GUM PAROEX 012 Mouthrinse 300ml Bottle-1670x3817.png', desc: 'Chlorhexidine mouthwash range for short-term gum care.' },
+    { name: 'K-Files', brand: 'MANI', cat: 'Endodontics', img: 'asset/2_32_1.png', desc: 'Stainless steel hand files for canal negotiation and shaping.' },
   ];
 
   const pgrid = $('#pgrid'), scChips = $('#scChips');
   const initials = n => n.split(/[\s&]+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
-  const imgHTML = p => p.img ? `<img src="${encodeURI(p.img)}" alt="${p.name}" draggable="false" loading="lazy">` : `<div class="ph-img"><div><b>${initials(p.name)}</b>Add product image</div></div>`;
+  const imgHTML = p => p.img ? `<img class="fit" src="${encodeURI(p.img)}" alt="${p.name}" draggable="false">` : `<div class="ph-img"><div><b>${initials(p.name)}</b>Add product image</div></div>`;
+  // Make every product photo look the same size: trim empty transparent edges, then give each one the same visual area
+  const trimCache = {};
+  function trimSrc(img) {
+    const key = img.currentSrc || img.src;
+    if (trimCache[key]) return trimCache[key];
+    let out = null;
+    try {
+      const W = img.naturalWidth, H = img.naturalHeight, k = Math.min(1, 320 / Math.max(W, H));
+      const sw = Math.max(1, Math.round(W * k)), sh = Math.max(1, Math.round(H * k));
+      const c = document.createElement('canvas'); c.width = sw; c.height = sh;
+      const x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(img, 0, 0, sw, sh);
+      const d = x.getImageData(0, 0, sw, sh).data;
+      let x0 = sw, y0 = sh, x1 = -1, y1 = -1;
+      for (let y = 0; y < sh; y++) for (let xx = 0; xx < sw; xx++) {
+        const i = (y * sw + xx) * 4;
+        const bg = d[i + 3] < 14 || (d[i] > 246 && d[i + 1] > 246 && d[i + 2] > 246);
+        if (!bg) { if (xx < x0) x0 = xx; if (xx > x1) x1 = xx; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+      }
+      if (x1 > x0 && y1 > y0) {
+        const pad = 2 / k, cx = Math.max(0, x0 / k - pad), cy = Math.max(0, y0 / k - pad);
+        const cw = Math.min(W - cx, (x1 + 1) / k - cx + pad), ch = Math.min(H - cy, (y1 + 1) / k - cy + pad);
+        const m = Math.min(1, 900 / Math.max(cw, ch));
+        const o = document.createElement('canvas'); o.width = Math.round(cw * m); o.height = Math.round(ch * m);
+        o.getContext('2d').drawImage(img, cx, cy, cw, ch, 0, 0, o.width, o.height);
+        out = { url: o.toDataURL('image/png'), r: cw / ch };
+      }
+    } catch (e) { /* opened from disk: browser blocks reading pixels, so skip the trim */ }
+    if (!out) out = { url: null, r: img.naturalWidth / img.naturalHeight };
+    return (trimCache[key] = out);
+  }
+  function sizeFit(img) {
+    const box = img.parentElement, cs = getComputedStyle(box);
+    const CW = box.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    const CH = box.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    const r = +img.dataset.r || 1; if (!(CW > 0 && CH > 0)) return;
+    const A = Math.pow(Math.min(CW, CH) * 0.92, 2);
+    let w = Math.sqrt(A * r), h = w / r;
+    const f = Math.min(1, CW / w, CH / h); w *= f; h *= f;
+    img.style.width = w + 'px'; img.style.height = h + 'px';
+  }
+  function prepFit(img) {
+    const go = () => {
+      if (img.dataset.done) { sizeFit(img); return; }
+      const t = trimSrc(img); img.dataset.done = 1; img.dataset.r = t.r;
+      if (t.url) img.src = t.url;
+      sizeFit(img);
+    };
+    if (img.complete && img.naturalWidth) go(); else img.addEventListener('load', go, { once: true });
+  }
+  const fitAll = () => document.querySelectorAll('img.fit').forEach(i => i.dataset.done && sizeFit(i));
+  addEventListener('resize', fitAll);
   const tiles = PRODUCTS.map((p, i) => {
     const t = document.createElement('div'); t.className = 'ptile'; t.dataset.cat = p.cat; t.tabIndex = 0;
     t.innerHTML = `<div class="pt-tilt"><div class="pt-in">
@@ -734,7 +787,7 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:34px 0 46px;color:var(
       t.classList.toggle('flipped');
     });
     t.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); t.classList.toggle('flipped'); } });
-    pgrid.appendChild(t); return t;
+    pgrid.appendChild(t); const fi = t.querySelector('img.fit'); if (fi) prepFit(fi); return t;
   });
   // category chips: tiles glide to their new places (FLIP animation)
   function filterTo(cat) {
@@ -762,7 +815,7 @@ footer{border-top:1px solid rgba(255,255,255,.08);padding:34px 0 46px;color:var(
   const pm = $('#pmodal'), pmImg = $('#pmImg');
   let pmIdx = 0;
   const visible = () => tiles.map((t, i) => i).filter(i => tiles[i].style.display !== 'none');
-  function fillModal(i) { const p = PRODUCTS[i]; pmIdx = i; pmImg.innerHTML = imgHTML(p); $('#pmBrand').textContent = p.brand; $('#pmName').textContent = p.name; $('#pmCat').textContent = p.cat; $('#pmDesc').textContent = p.desc; }
+  function fillModal(i) { const p = PRODUCTS[i]; pmIdx = i; pmImg.innerHTML = imgHTML(p); const mi = pmImg.querySelector('img.fit'); if (mi) prepFit(mi); $('#pmBrand').textContent = p.brand; $('#pmName').textContent = p.name; $('#pmCat').textContent = p.cat; $('#pmDesc').textContent = p.desc; }
   function openModal(i) { fillModal(i); pm.classList.add('on'); document.documentElement.style.overflow = 'hidden'; }
   function closeModal() { pm.classList.remove('on'); document.documentElement.style.overflow = ''; }
   function stepModal(d) { const v = visible(), k = v.indexOf(pmIdx); fillModal(v[(k + d + v.length) % v.length]); }
